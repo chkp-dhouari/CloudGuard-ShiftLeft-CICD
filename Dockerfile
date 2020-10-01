@@ -2,6 +2,6 @@
 FROM node
 MAINTAINER Dean Houari
 COPY myshell.rar /home
-COPY evilbot.rar /home 
+COPY web.rar /home 
 ADD webapp.js /webapp.js
 ENTRYPOINT ["node", "webapp.js"]

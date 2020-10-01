@@ -26,7 +26,7 @@ pipeline {
          script {      
               try {
 
-                wget https://shiftleft-prod.s3.amazonaws.com/blades/shiftleft/bin/linux/amd64/0.0.27/shiftleft
+               ## wget https://shiftleft-prod.s3.amazonaws.com/blades/shiftleft/bin/linux/amd64/0.0.27/shiftleft
                 
             
                 sh 'chmod +x shiftleft' 

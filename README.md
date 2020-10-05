@@ -9,18 +9,18 @@ The ShiftLeft CLi plugin or Docker container will integrate posture management a
                                                                                        
 ### Git code-scan	      
 
-Source-code security and visibility into the risk analysis of projects in Git repositories	
+The code-scan blade provides Source-code security and visibility into the risk analysis of projects in Git repositories.
 
-> shiftleft code-scan -h
+> shiftleft code-scan 
 
 ### iac-assessment	
 
-Scans Infrastructure-as-code templates, enabling DevOps and security teams to identify insecure configurations	shiftleft 
+The iac-assessment blade will scan Infrastructure-as-code templates, enabling DevOps and security teams to identify insecure configurations	
 
-> iac-assessment -h
+> shiftleft iac-assessment 
 
 ### image-scan	   
 
-Scan container images for security risks and vulnerabilities
+The image-scan blade will scan Docker container images for security risks and vulnerabilities
 
-> shiftleft image-scan -h
+> shiftleft image-scan 

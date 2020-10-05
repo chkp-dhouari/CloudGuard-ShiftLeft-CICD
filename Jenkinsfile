@@ -77,7 +77,7 @@ pipeline {
              }
           }
             
-       stage('Code approval request') {
+       stage('Container image approval request') {
      
            steps {
              script {

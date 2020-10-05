@@ -31,7 +31,7 @@ pipeline {
             
                 sh 'chmod +x shiftleft' 
 
-                sh './shiftleft sourceguard -s .'
+                sh './shiftleft code-scan -s .'
            
                } catch (Exception e) {
     

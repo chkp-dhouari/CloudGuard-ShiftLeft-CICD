@@ -3,7 +3,8 @@ pipeline {
       environment {
            SG_CLIENT_ID = credentials("SG_CLIENT_ID")
            SG_SECRET_KEY = credentials("SG_SECRET_KEY")
-         
+           CLOUDGUARD_ID = credentials("CLOUDGUARD_ID")
+           CLOUDGUARD_KEY = credentials("CLOUDGUARD_KEY")
         }
         
   stages {
@@ -50,7 +51,7 @@ pipeline {
           }
            
            
-          stage('Docker image Build and scan prep') {
+          stage('webapp Docker image Build and scan prep') {
              
             steps {
 
@@ -64,12 +65,20 @@ pipeline {
            
             steps {
          
-                    sh './ShiftLeft image-scan -i webapp.tar'
+                    sh './shiftLeft image-scan -i webapp.tar'
                     
               }
             }
             
         
+      stage('Terraform config policy Scan') {    
+           
+            steps {
+         
+                    sh './shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p "./terraform"'
+                    
+              }
+            }
   } 
 }
 

@@ -3,8 +3,8 @@ pipeline {
       environment {
            SG_CLIENT_ID = credentials("SG_CLIENT_ID")
            SG_SECRET_KEY = credentials("SG_SECRET_KEY")
-           CLOUDGUARD_ID = credentials("CLOUDGUARD_ID")
-           CLOUDGUARD_KEY = credentials("CLOUDGUARD_KEY")
+           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
+           CHKP_CLOUDGUARD_KEY = credentials("CHKP_CLOUDGUARD_KEY")
         }
         
   stages {

@@ -68,7 +68,7 @@ pipeline {
                 script {      
               try {
          
-                    sh './shiftLeft image-scan -i webapp.tar'
+                    sh './shiftleft image-scan -i webapp.tar'
                    } catch (Exception e) {
     
                  echo "Request for Approval"  

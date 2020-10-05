@@ -4,7 +4,7 @@ pipeline {
            SG_CLIENT_ID = credentials("SG_CLIENT_ID")
            SG_SECRET_KEY = credentials("SG_SECRET_KEY")
            CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-           CHKP_CLOUDGUARD_KEY = credentials("CHKP_CLOUDGUARD_KEY")
+           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
         }
         
   stages {

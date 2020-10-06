@@ -54,3 +54,6 @@ The iac-assessment blade will scan Infrastructure-as-code templates, enabling De
 The image-scan blade will scan Docker container images for security risks and vulnerabilities
 
 > shiftleft image-scan 
+
+
+![header image](shiftleftcicd.png) 

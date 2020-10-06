@@ -1,6 +1,6 @@
 # Check Point CloudGuard ShiftLeft integration with Jenkins CICD pipeline:
 
-## ![header image](warning.jpeg) this demo contains Malware for the purpose of this demo so please do not use in a production environment
+## ![header image](warning.jpeg) This demo contains Malware for the purpose of this demo so please do not use in a production environment
 
 
 CloudGuard ShiftLeft CLI tool is a framework that will enable you to access all the various blades that CloudGuard offers quick and easy for integration within your pipeline.

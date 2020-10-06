@@ -41,7 +41,6 @@ The image-scan blade will scan Docker container images for security risks and vu
 
 ![header image](shifleftcicd.png) 
 
-
 [![header image](shift.png)](https://www.youtube.com/watch?v=UAZixZ7ddbQ&feature=youtu.be "ShiftLeft")
 
 

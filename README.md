@@ -41,11 +41,13 @@ The image-scan blade will scan Docker container images for security risks and vu
 
 ![header image](shifleftcicd.png) 
 
-Please refer to the Jenkinsfile for the CICD pipeline details.
+### Video of ShiftLeft in action with the Jenkins CICD Pipeline
+
+![header image](shift.png) 
+(https://www.youtube.com/watch?v=UAZixZ7ddbQ&feature=youtu.be "ShiftLeft")
 
 Please add your Cloudguard key and secret and add them to the credentials using CHKP_CLOUDGUARD_ID and CHKP_CLOUDGUARD_SECRET
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UAZixZ7ddbQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
 ### The scan result for the source code scan:

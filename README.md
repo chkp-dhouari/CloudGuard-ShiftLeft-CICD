@@ -45,6 +45,10 @@ Please refer to the Jenkinsfile for the CICD pipeline details.
 
 Please add your Cloudguard key and secret and add them to the credentials using CHKP_CLOUDGUARD_ID and CHKP_CLOUDGUARD_SECRET
 
+
+{% include youtubePlayer.html id="UAZixZ7ddbQ" %}
+
+
 ### The scan result for the source code scan:
 
 > ShiftLeft is capable of finding CVEs, credentials and Malware!

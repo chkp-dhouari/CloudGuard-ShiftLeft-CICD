@@ -162,7 +162,7 @@ The Terraform main.tf has a configuration to deploy a S3 bucket and I am using a
 
 ```
 
-+ ./shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p ./terraform
++ ./shiftleft iac-assessment -l "S3Bucket should have encryption.serverSideEncryptionRules" -p ./terraform
 [31mERROR  [0m[06-10-2020 03:36:07.870] test rule name: '' logic: S3Bucket failed with error 
 [
     {

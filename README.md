@@ -44,9 +44,7 @@ The image-scan blade will scan Docker container images for security risks and vu
 [![header image](shift.png)](https://www.youtube.com/watch?v=UAZixZ7ddbQ&feature=youtu.be "ShiftLeft")
 
 
-Please add your Cloudguard key and secret and add them to the credentials using CHKP_CLOUDGUARD_ID and CHKP_CLOUDGUARD_SECRET
-
-
+#### Please add your Cloudguard credentials and add them to Jenkins using CHKP_CLOUDGUARD_ID and CHKP_CLOUDGUARD_SECRET
 
 ### The scan result for the source code scan:
 

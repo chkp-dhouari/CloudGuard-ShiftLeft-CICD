@@ -1,5 +1,8 @@
 # Check Point CloudGuard ShiftLeft integration with Jenkins CICD pipeline:
 
+## ![header image](warning.jpeg) this demo contains Malware for the purpose of this demo so please do not use in a production environment
+
+
 CloudGuard ShiftLeft CLI tool is a framework that will enable you to access all the various blades that CloudGuard offers quick and easy for integration within your pipeline.
 CloudGuard ShiftLeft will allow you to scan source code, Docker container images and serverless deployment packages, Terraform templates, and more. 
 The ShiftLeft binary or Docker container will integrate posture management and SAST to your CI/CD deployment pipelines for any CI server.

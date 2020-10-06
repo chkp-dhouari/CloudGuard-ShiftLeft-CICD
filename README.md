@@ -45,8 +45,7 @@ Please refer to the Jenkinsfile for the CICD pipeline details.
 
 Please add your Cloudguard key and secret and add them to the credentials using CHKP_CLOUDGUARD_ID and CHKP_CLOUDGUARD_SECRET
 
-
-{% include youtubePlayer.html id="UAZixZ7ddbQ" %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UAZixZ7ddbQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
 ### The scan result for the source code scan:

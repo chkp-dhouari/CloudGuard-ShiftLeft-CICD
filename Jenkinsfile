@@ -53,8 +53,8 @@ pipeline {
              
             steps {
 
-              sh 'docker build -t dhouari/webapp .'
-              sh 'docker save dhouari/webapp -o webapp.tar'
+              sh 'docker build -t para92/webapp .'
+              sh 'docker save para92/webapp -o webapp.tar'
               
              } 
            }

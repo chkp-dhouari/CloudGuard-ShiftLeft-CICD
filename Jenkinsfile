@@ -39,7 +39,7 @@ pipeline {
                     git branch: '{banch}',
                     credentialsId: '{jenkins_credentials_id_for_git_credentials}',
               
-                sh 'shiftleft image-scan -s code-dir -r {rulesetId} -e {environmentId}'
+                sh '''shiftleft image-scan -s code-dir -r {rulesetId} -e {environmentId}'''
                 
           }
           
@@ -74,7 +74,7 @@ pipeline {
                     git branch: '{banch}',
                     credentialsId: '{jenkins_credentials_id_for_git_credentials}',
                    
-                sh 'shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'
+                sh '''shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'''
             }
       }
 }

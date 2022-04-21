@@ -3,13 +3,13 @@ pipeline {
       environment {
            CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
            CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
-        }
+      }
         
   stages {
           
          stage('Clone Github repository') {
          
-               steps {
+             steps {
               
              checkout scm
            
@@ -22,10 +22,9 @@ pipeline {
             steps {
 
               sh 'docker build -t checkpoint/shiftleft .'
-              sh 'docker save checkpoint/shiftlef -o chkpshiftleft01.tar'
-              
-             } 
-           }
+              sh 'docker save checkpoint/shiftlef -o chkpshiftleft01.tar'              
+            }
+    }
     stage('ShiftLeft Container Image Scan') { 
           
           agent {
@@ -34,7 +33,7 @@ pipeline {
                     args '-v /tmp/:/tmp/
                 }
                 
-            }
+          }
           steps {
                 dir('code-dir') {
                     git branch: '{banch}',
@@ -62,12 +61,8 @@ pipeline {
                     url: {git_repo_url}'
                 }
                 sh 'shiftleft code-scan -s code-dir -r {rulesetId} -e {environmentId}'
-          
-                  }
-                }  
-             }
-          }
-      
+            }
+      }
       stage('CloudGuard_Shiftleft_IaC') {
          
             agent {
@@ -85,3 +80,4 @@ pipeline {
                 sh 'shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'
             }
       }
+}

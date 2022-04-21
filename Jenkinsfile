@@ -8,9 +8,8 @@ pipeline {
   stages {
           
          stage('Clone Github repository') {
-            
-    
-           steps {
+         
+               steps {
               
              checkout scm
            
@@ -18,81 +17,73 @@ pipeline {
   
           }
           
-    stage('ShiftLeft Code Scan') {   
-       steps {   
-                   
-         script {      
-              try {
-
-             
-                
-            
-                sh 'chmod +x shiftleft' 
-
-                sh './shiftleft code-scan -s .'
-           
-               } catch (Exception e) {
-    
-                 echo "Request for Approval"  
-                  }
-              }
-            }
-         }
-         
-     stage('Code approval request') {
-     
-           steps {
-             script {
-               def userInput = input(id: 'confirm', message: 'Do you Approve to use this code?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Approve Code to Proceed', name: 'approve'] ])
-              }
-            }
-          }
-           
-           
-          stage('webapp Docker image Build and scan prep') {
+    stage('webapp Docker image Build and scan prep') {
              
             steps {
 
-              sh 'docker build -t para92/webapp .'
-              sh 'docker save para92/webapp -o webapp.tar'
+              sh 'docker build -t checkpoint/shiftleft .'
+              sh 'docker save checkpoint/shiftlef -o chkpshiftleft01.tar'
               
              } 
            }
-        
+    stage('ShiftLeft Container Image Scan') { 
+          
+          agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/
+                }
+                
+            }
+          steps {
+                dir('code-dir') {
+                    git branch: '{banch}',
+                    credentialsId: '{jenkins_credentials_id_for_git_credentials}',
+                    url: {git_repo_url}'
+                }
+                sh 'shiftleft image-scan -s code-dir -r {rulesetId} -e {environmentId}'
+                
+          }
+          
+       }
+                  
+    stage('CloudGuard_Shiftleft_Code_Scan') {    
            
-       stage('ShiftLeft Container Image Scan') {    
-           
+            agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/'
+                }
+            }
             steps {
-                script {      
-              try {
-         
-                    sh './shiftleft image-scan -t 180 -i webapp.tar'
-                   } catch (Exception e) {
-    
-                 echo "Request for Approval"  
+                dir('code-dir') {
+                    git branch: '{banch}',
+                    credentialsId: '{jenkins_credentials_id_for_git_credentials}',
+                    url: {git_repo_url}'
+                }
+                sh 'shiftleft code-scan -s code-dir -r {rulesetId} -e {environmentId}'
+          
                   }
                 }  
              }
           }
-            
-       stage('Container image approval request') {
-     
-           steps {
-             script {
-               def userInput = input(id: 'confirm', message: 'Do you Approve to use this container image?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Approve docker image to Proceed', name: 'approve'] ])
-              }
-            }
-          }
-        
-      stage('Terraform config policy Scan') {    
-           
-            steps {
+      
+      stage('CloudGuard_Shiftleft_IaC') {
          
-                    sh './shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p ./terraform'
-                    
-              }
+            agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/'
+                }
             }
-  } 
+            steps {
+                dir('iac-code') {
+                    git branch: '{master}',
+                    credentialsId: '{jenkins_credentials_id_for_git_credentials}',
+                    url: {git_repo_url}'
+                }
+                sh 'shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'
+            }
+      }
 }
-
 

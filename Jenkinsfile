@@ -30,7 +30,7 @@ pipeline {
           agent {
                 docker { 
                     image 'checkpoint/shiftleft:latest'
-                    args '-v /tmp/:/tmp/
+                    
                 }
                 
           }
@@ -51,7 +51,7 @@ pipeline {
             agent {
                 docker { 
                     image 'checkpoint/shiftleft:latest'
-                    args '-v /tmp/:/tmp/'
+                   
                 }
             }
             steps {
@@ -68,7 +68,7 @@ pipeline {
             agent {
                 docker { 
                     image 'checkpoint/shiftleft:latest'
-                    args '-v /tmp/:/tmp/'
+                   
                 }
             }
             steps {

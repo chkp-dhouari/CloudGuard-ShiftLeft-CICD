@@ -85,5 +85,3 @@ pipeline {
                 sh 'shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'
             }
       }
-}
-

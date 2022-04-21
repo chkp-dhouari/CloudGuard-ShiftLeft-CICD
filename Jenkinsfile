@@ -18,7 +18,6 @@ pipeline {
           }
           
     stage('webapp Docker image Build and scan prep') {
-    }
              
             steps {
 
@@ -27,7 +26,6 @@ pipeline {
             }
     }
     stage('ShiftLeft Container Image Scan') { 
-    }
           
           agent {
                 docker { 
@@ -47,8 +45,7 @@ pipeline {
           
        }
                   
-    stage('CloudGuard_Shiftleft_Code_Scan') {
-    }
+          stage('CloudGuard_Shiftleft_Code_Scan') {
            
             agent {
                 docker { 
@@ -65,7 +62,7 @@ pipeline {
             }
       }
       stage('CloudGuard_Shiftleft_IaC') {
-      }
+     
          
             agent {
                 docker { 
@@ -81,4 +78,3 @@ pipeline {
                 sh '''shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'''
             }
       }
-}

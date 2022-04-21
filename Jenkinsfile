@@ -57,8 +57,7 @@ pipeline {
                 dir('code-dir') {
                     git branch: '{banch}',
                     credentialsId: '{jenkins_credentials_id_for_git_credentials}',
-                    
-                }
+                
                 sh 'shiftleft code-scan -s code-dir -r {rulesetId} -e {environmentId}'
             }
       }
@@ -74,8 +73,7 @@ pipeline {
                 dir('iac-code') {
                     git branch: '{banch}',
                     credentialsId: '{jenkins_credentials_id_for_git_credentials}',
-                    
-                }
+                   
                 sh 'shiftleft iac-assessment -i terraform -p iac-code/terraform-template -r {rulesetId} -e {environmentId}'
             }
       }

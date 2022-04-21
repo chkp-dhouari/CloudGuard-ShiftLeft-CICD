@@ -73,7 +73,7 @@ pipeline {
             }
             steps {
                 dir('iac-code') {
-                    git branch: '{master}',
+                    git branch: '{banch}',
                     credentialsId: '{jenkins_credentials_id_for_git_credentials}',
                     url: {git_repo_url}'
                 }

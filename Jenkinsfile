@@ -22,7 +22,7 @@ pipeline {
             steps {
 
               sh 'docker build -t checkpoint/shiftleft .'
-              sh 'docker save checkpoint/shiftlef -o chkpshiftleft01.tar'              
+              sh 'docker save checkpoint/shiftleft -o chkpshiftleft01.tar'              
             }
     }
     stage('ShiftLeft Container Image Scan') { 

@@ -14,11 +14,5 @@ pipeline {
         sh "$HOME/.spectral/spectral scan --ok --engine-kinds spectral packages --include-tags base,audit,iac"
       }
     }
-    stage('build') {
-      steps {
-        // your build scripts
-        sh "./build.sh"
-      }
-    }
   }
 }

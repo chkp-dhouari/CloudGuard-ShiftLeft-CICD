@@ -2,7 +2,7 @@ resource "aws_instance" "ec2-prod" {
   ami = data.aws_ami.ami.id
   instance_type = "t2.micro"
   availability_zone = "us-east-2b"
-  key_name = aws_key_pair.ssh.key_name
+  key_name = mchung-dell-pem
   vpc_security_group_ids = [aws_security_group.prov_fw.id]
 
   connection {

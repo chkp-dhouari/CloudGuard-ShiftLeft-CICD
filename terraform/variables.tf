@@ -9,6 +9,6 @@ data "aws_ami" "ami" {
 }
 
 variable "lifecycles" {
-  default = "t2.micro"
+  default = "t2.large"
 }
 

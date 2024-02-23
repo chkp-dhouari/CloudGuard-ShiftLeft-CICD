@@ -1,96 +1,88 @@
 pipeline {
-      agent any
-      environment {
-           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
+    agent any
+    stages {
+        stage('Get Code') {
+            steps {
+                dir('code-dir') {
+                    git branch: 'master',
+                    credentialsId: '{chkp-rolandop-git}',
+                    url: 'https://github.com/chkp-rolandop/demo-app'
+                }
+                sh '''
+                    cd code-dir
+                    docker build -t demo-app .
+                    docker save -o demo-app.tar demo-app
+                '''
+            }
         }
-        
-  stages {
-          
-         stage('Clone Github repository') {
-            
-    
-           steps {
-              
-             checkout scm
-           
-             }
-  
-          }
-          
-    stage('ShiftLeft Code Scan') {   
-       steps {   
-                   
-         script {      
-              try {
-
-             
-                
-            
-                sh 'chmod +x shiftleft' 
-
-                sh './shiftleft code-scan -s .'
-           
-               } catch (Exception e) {
-    
-                 echo "Request for Approval"  
-                  }
-              }
+        stage('CloudGuard_Shiftleft_Code_Scan') {
+            environment {
+                CHKP_CLOUDGUARD_CREDS = credentials('CloudGuard_Credentials')
             }
-         }
-         
-     stage('Code approval request') {
-     
-           steps {
-             script {
-               def userInput = input(id: 'confirm', message: 'Do you Approve to use this code?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Approve Code to Proceed', name: 'approve'] ])
-              }
+            agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/ -v $PWD;$PWD -w $PWD'
+                    reuseNode true
+                }
             }
-          }
-           
-           
-          stage('webapp Docker image Build and scan prep') {
-             
             steps {
-
-              sh 'docker build -t para92/webapp .'
-              sh 'docker save para92/webapp -o webapp.tar'
-              
-             } 
-           }
-        
-           
-       stage('ShiftLeft Container Image Scan') {    
-           
-            steps {
-                script {      
-              try {
-         
-                    sh './shiftleft image-scan -t 180 -i webapp.tar'
-                   } catch (Exception e) {
-    
-                 echo "Request for Approval"  
-                  }
-                }  
-             }
-          }
-            
-       stage('Container image approval request') {
-     
-           steps {
-             script {
-               def userInput = input(id: 'confirm', message: 'Do you Approve to use this container image?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Approve docker image to Proceed', name: 'approve'] ])
-              }
+                script {
+                    try {
+                    sh '''
+                        export CHKP_CLOUDGUARD_ID=$CHKP_CLOUDGUARD_CREDS_USR
+                        export CHKP_CLOUDGUARD_SECRET=$CHKP_CLOUDGUARD_CREDS_PSW
+                        shiftleft code-scan -s code-dir -r -2003 -e 500916a9-5e56-4ed4-b9f9-182ea04f968a
+                    '''
+                    } catch (err) {}
+                }
             }
-          }
-        
-      stage('Terraform config policy Scan') {    
-           
-            steps {
-         
-                    sh './shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p ./terraform'
-                    
-              }
+        }
+        stage('CloudGuard_Shiftleft_Image_Scan') {
+            environment {
+                CHKP_CLOUDGUARD_CREDS = credentials('CloudGuard_Credentials')
             }
-  } 
+            agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/ -v $PWD:$PWD -w $PWD'
+                    reuseNode true
+                }
+            }
+            steps {
+                script{
+                        try {
+                        sh '''
+                            export CHKP_CLOUDGUARD_ID=$CHKP_CLOUDGUARD_CREDS_USR
+                            export CHKP_CLOUDGUARD_SECRET=$CHKP_CLOUDGUARD_CREDS_PSW
+                            shiftleft image-scan -i ./code-dir/demo-app.tar -r -2002 -e 500916a9-5e56-4ed4-b9f9-182ea04f968a
+                        '''
+                        } catch (err) {}
+                    }
+            }
+        }
+        stage('CloudGuard_Shiftleft_IaC') {
+            environment {
+                CHKP_CLOUDGUARD_CREDS = credentials('CloudGuard_Credentials')
+            }
+            agent {
+                docker { 
+                    image 'checkpoint/shiftleft:latest'
+                    args '-v /tmp/:/tmp/'
+                }
+            }
+            steps {
+                dir('iac-code') {
+                    git branch: 'master',
+                    credentialsId: '{chkp-rolandop-git}',
+                    url: 'https://github.com/chkp-rolandop/demo-app'
+                }
+                sh '''
+                    export CHKP_CLOUDGUARD_ID=$CHKP_CLOUDGUARD_CREDS_USR
+                    export CHKP_CLOUDGUARD_SECRET=$CHKP_CLOUDGUARD_CREDS_PSW
+                    shiftleft iac-assessment -i terraform -p iac-code/terraform-template -s "Critical" -r -64 -e 500916a9-5e56-4ed4-b9f9-182ea04f968a
+                '''
+            }
+        }
+    }
 }
